@@ -20,7 +20,11 @@ public class OrderController {
 
     @GetMapping //http://localhost:8181/api/order
     public ResponseEntity<List<Order>> getAllOrders() {
-        return new ResponseEntity<>(orderService.readAllOrders(), HttpStatus.OK);
+        List<Order> orders = orderService.readAllOrders();
+        if (orders.isEmpty()) {
+            throw new ResourceNotFoundException("There are no orders in DB");
+        }
+        return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
     @GetMapping("/orderById/{id}") //http://localhost:8181/api/order/orderById/{id}
@@ -47,16 +51,16 @@ public class OrderController {
 
     @PutMapping("/updateOrder") //http://localhost:8181/api/order/updateOrder
     public ResponseEntity<Order> updateOrder(@RequestBody Order order) {
-        return new ResponseEntity<>(orderService.updateOrder(order),HttpStatus.OK);
+        return new ResponseEntity<>(orderService.updateOrder(order), HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteOrderById/{id}") //http://localhost:8181/api/order/deleteOrderById/{id}
-    public ResponseEntity<?> deleteOrderById(@PathVariable Long id){
+    public ResponseEntity<?> deleteOrderById(@PathVariable Long id) {
         Optional<Order> orderOptional = orderService.getOrderById(id);
-        orderOptional.orElseThrow(()->
+        orderOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The order with id " + id + " doesn't exist in DB"));
         orderService.deleteOrderById(id);
-        return new ResponseEntity<>("The order with id " + id + " was deleted",HttpStatus.OK);
+        return new ResponseEntity<>("The order with id " + id + " was deleted", HttpStatus.OK);
     }
 
 

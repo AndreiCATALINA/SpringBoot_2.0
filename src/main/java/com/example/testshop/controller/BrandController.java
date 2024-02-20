@@ -20,7 +20,11 @@ public class BrandController {
 
     @GetMapping //http://localhost:8181/api/brand
     public ResponseEntity<List<Brand>> getAllBrands() {
-        return new ResponseEntity<>(brandService.readAllBrands(), HttpStatus.OK);
+        List<Brand> brands = brandService.readAllBrands();
+        if (brands.isEmpty()) {
+            throw new ResourceNotFoundException("There are no brands in DB");
+        }
+        return new ResponseEntity<>(brands, HttpStatus.OK);
     }
 
     @GetMapping("/brandById/{id}") //http://localhost:8181/api/brand/brandById/{id}
@@ -56,7 +60,7 @@ public class BrandController {
         brandOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The brand with id: " + id + " doesn't exist in DB"));
         brandService.deleteBrandById(id);
-        return new ResponseEntity<>("The brand with the id: "+ id+"  was deleted successfully",HttpStatus.OK);
+        return new ResponseEntity<>("The brand with the id: " + id + "  was deleted successfully", HttpStatus.OK);
     }
 
 
