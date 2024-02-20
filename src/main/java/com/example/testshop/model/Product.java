@@ -25,7 +25,6 @@ public class Product {
     private List<Order> orders;
 
     //ManyToOne relation with the brand entity
-
     @ManyToOne
     @JoinColumn(name = "brand_id",referencedColumnName = "id")
     private Brand brand;

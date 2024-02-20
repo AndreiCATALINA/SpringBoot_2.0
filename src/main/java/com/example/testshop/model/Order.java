@@ -22,7 +22,7 @@ public class Order {
 
     //ManyToOne relation with the client entity
     @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false, referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
     //ManyToMany relation with the product entity
