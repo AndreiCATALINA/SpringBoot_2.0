@@ -21,7 +21,9 @@ public class Product {
     private Boolean validity;
 
     //ManyToMany relation with the order entity
-    @ManyToMany(mappedBy = "products" ,fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"))
     private List<Order> orders;
 
     //ManyToOne relation with the brand entity

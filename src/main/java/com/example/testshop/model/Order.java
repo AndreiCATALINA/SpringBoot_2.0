@@ -26,8 +26,6 @@ public class Order {
     private Client client;
 
     //ManyToMany relation with the product entity
-    @ManyToMany
-    @JoinTable(joinColumns = @JoinColumn(name = "order_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"))
+    @ManyToMany(mappedBy = "orders" ,fetch = FetchType.LAZY)
     private List<Product> products;
 }
