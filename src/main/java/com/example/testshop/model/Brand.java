@@ -1,5 +1,6 @@
 package com.example.testshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -20,5 +21,6 @@ public class Brand {
 
     //OneToMany relation with the product entity
     @OneToMany(mappedBy = "brand")
+    @JsonIgnoreProperties("brand")
     private List<Product> products;
 }
