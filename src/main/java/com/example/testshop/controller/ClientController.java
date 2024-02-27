@@ -1,5 +1,6 @@
 package com.example.testshop.controller;
 
+import com.example.testshop.dto.ClientDTO;
 import com.example.testshop.exception.ResourceNotFoundException;
 import com.example.testshop.model.Client;
 import com.example.testshop.service.ClientService;
@@ -19,8 +20,8 @@ public class ClientController {
     private final ClientService clientService;
 
     @GetMapping //http://localhost:8181/api/client
-    public ResponseEntity<List<Client>> getAllClients() {
-        List<Client> clients = clientService.getAllClients();
+    public ResponseEntity<List<ClientDTO>> getAllClients() {
+        List<ClientDTO> clients = clientService.getAllClients();
         if (clients.isEmpty()) {
             throw new ResourceNotFoundException("There are no clients in DB");
         }
