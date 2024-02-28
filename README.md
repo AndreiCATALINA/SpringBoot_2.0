@@ -1,0 +1,1 @@
+This project will be about me learning how to create a backend application. The application is an online shop. 
