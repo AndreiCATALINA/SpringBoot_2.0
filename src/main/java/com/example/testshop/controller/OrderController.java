@@ -1,5 +1,6 @@
 package com.example.testshop.controller;
 
+import com.example.testshop.dto.OrderDTO;
 import com.example.testshop.exception.ResourceNotFoundException;
 import com.example.testshop.model.Order;
 import com.example.testshop.service.OrderService;
@@ -19,8 +20,8 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping //http://localhost:8181/api/order
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.readAllOrders();
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        List<OrderDTO> orders = orderService.readAllOrders();
         if (orders.isEmpty()) {
             throw new ResourceNotFoundException("There are no orders in DB");
         }
@@ -28,8 +29,8 @@ public class OrderController {
     }
 
     @GetMapping("/orderById/{id}") //http://localhost:8181/api/order/orderById/{id}
-    public ResponseEntity<Optional<Order>> getOrderById(@PathVariable Long id) {
-        Optional<Order> orderOptional = orderService.getOrderById(id);
+    public ResponseEntity<Optional<OrderDTO>> getOrderById(@PathVariable Long id) {
+        Optional<OrderDTO> orderOptional = orderService.getOrderById(id);
         orderOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The order with id " + id + " doesn't exist in DB"));
         return new ResponseEntity<>(orderOptional, HttpStatus.OK);
@@ -56,7 +57,7 @@ public class OrderController {
 
     @DeleteMapping("/deleteOrderById/{id}") //http://localhost:8181/api/order/deleteOrderById/{id}
     public ResponseEntity<?> deleteOrderById(@PathVariable Long id) {
-        Optional<Order> orderOptional = orderService.getOrderById(id);
+        Optional<OrderDTO> orderOptional = orderService.getOrderById(id);
         orderOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The order with id " + id + " doesn't exist in DB"));
         orderService.deleteOrderById(id);

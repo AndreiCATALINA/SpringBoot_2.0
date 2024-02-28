@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Service
 public class ClientServiceImpl implements ClientService {
 
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
     private final ClientDTOMapper clientDTOMapper;
 
     public ClientServiceImpl(ClientRepository clientRepository, ClientDTOMapper clientDTOMapper) {
@@ -30,8 +30,9 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Optional<Client> getClientById(Long id) {
-        return clientRepository.findById(id);
+    public Optional<ClientDTO> getClientById(Long id) {
+        return clientRepository.findById(id)
+                .map(clientDTOMapper);
     }
 
     @Override

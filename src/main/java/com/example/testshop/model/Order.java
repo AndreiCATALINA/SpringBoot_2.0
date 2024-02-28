@@ -19,7 +19,7 @@ public class Order {
     @Column(name = "order_total")
     private double total;
     @Column(name = "order_quantity")
-    private int quantity;
+    private Integer quantity;
 
     //ManyToOne relation with the client entity
     @ManyToOne

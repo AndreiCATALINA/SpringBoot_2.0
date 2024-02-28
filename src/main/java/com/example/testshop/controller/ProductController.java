@@ -1,5 +1,6 @@
 package com.example.testshop.controller;
 
+import com.example.testshop.dto.ProductDTO;
 import com.example.testshop.exception.ResourceNotFoundException;
 import com.example.testshop.model.Product;
 import com.example.testshop.service.ProductService;
@@ -19,8 +20,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping //http://localhost:8181/api/product
-    public ResponseEntity<List<Product>> getAllProducts() {
-        List<Product> products = productService.findAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<ProductDTO> products = productService.findAllProducts();
         if (products.isEmpty()) {
             throw new ResourceNotFoundException("There are no products in DB");
         }
@@ -28,8 +29,8 @@ public class ProductController {
     }
 
     @GetMapping("/productById/{id}") //http://localhost:8181/api/product/productById/{id}
-    public ResponseEntity<Optional<Product>> getProductById(@PathVariable Long id) {
-        Optional<Product> productOptional = productService.findProductById(id);
+    public ResponseEntity<Optional<ProductDTO>> getProductById(@PathVariable Long id) {
+        Optional<ProductDTO> productOptional = productService.findProductById(id);
         productOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The product with id " + id + " doesn't exist in DB"));
         return new ResponseEntity<>(productOptional, HttpStatus.OK);
@@ -56,7 +57,7 @@ public class ProductController {
 
     @DeleteMapping("/deleteProductById/{id}") //http://localhost:8181/api/product/deleteProductById/{id}
     public ResponseEntity<?> deleteProductById(@PathVariable Long id) {
-        Optional<Product> productOptional = productService.findProductById(id);
+        Optional<ProductDTO> productOptional = productService.findProductById(id);
         productOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The product with id " + id + " doesn't exist in DB"));
         productService.deleteProductById(id);

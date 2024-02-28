@@ -1,5 +1,7 @@
 package com.example.testshop.service.impl;
 
+import com.example.testshop.dto.BrandDTO;
+import com.example.testshop.dto.BrandDTOMapper;
 import com.example.testshop.model.Brand;
 import com.example.testshop.repository.BrandRepository;
 import com.example.testshop.service.BrandService;
@@ -8,19 +10,24 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BrandServiceImpl implements BrandService {
 
-    private BrandRepository brandRepository;
+    private final BrandRepository brandRepository;
+    private final BrandDTOMapper brandDTOMapper;
 
-    public BrandServiceImpl(BrandRepository brandRepository) {
+    public BrandServiceImpl(BrandRepository brandRepository, BrandDTOMapper brandDTOMapper) {
         this.brandRepository = brandRepository;
+        this.brandDTOMapper = brandDTOMapper;
     }
 
     @Override
-    public List<Brand> readAllBrands() {
-        return brandRepository.findAll();
+    public List<BrandDTO> readAllBrands() {
+        return brandRepository.findAll()
+                .stream().map(brandDTOMapper)
+                .collect(Collectors.toList());
     }
 
     @Override

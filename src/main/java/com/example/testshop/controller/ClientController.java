@@ -29,8 +29,8 @@ public class ClientController {
     }
 
     @GetMapping("/clientById/{id}") //http://localhost:8181/api/client/clientById/{id}
-    public ResponseEntity<Optional<Client>> getClientById(@PathVariable Long id) {
-        Optional<Client> clientOptional = clientService.getClientById(id);
+    public ResponseEntity<Optional<ClientDTO>> getClientById(@PathVariable Long id) {
+        Optional<ClientDTO> clientOptional = clientService.getClientById(id);
         clientOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The client with id: " + id + " doesn't exist in DB"));
         return new ResponseEntity<>(clientOptional, HttpStatus.OK);
@@ -57,7 +57,7 @@ public class ClientController {
 
     @DeleteMapping("/deleteClientById/{id}") //http://localhost:8181/api/client/deleteClientById/{id}
     public ResponseEntity<?> deleteClientById(@PathVariable Long id) {
-        Optional<Client> clientOptional = clientService.getClientById(id);
+        Optional<ClientDTO> clientOptional = clientService.getClientById(id);
         clientOptional.orElseThrow(() ->
                 new ResourceNotFoundException("The client with id: " + id + " doesn't exist in DB"));
         clientService.deleteClientById(id);

@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface ClientService {
 
     List<ClientDTO> getAllClients();
-    Optional<Client> getClientById(Long id);
+    Optional<ClientDTO> getClientById(Long id);
     Client saveClient(Client client);
     Client updateClient(Client client);
     void deleteClientById(Long id);

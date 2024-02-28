@@ -1,5 +1,6 @@
 package com.example.testshop.controller;
 
+import com.example.testshop.dto.BrandDTO;
 import com.example.testshop.exception.ResourceNotFoundException;
 import com.example.testshop.model.Brand;
 import com.example.testshop.service.BrandService;
@@ -19,8 +20,8 @@ public class BrandController {
     private final BrandService brandService;
 
     @GetMapping //http://localhost:8181/api/brand
-    public ResponseEntity<List<Brand>> getAllBrands() {
-        List<Brand> brands = brandService.readAllBrands();
+    public ResponseEntity<List<BrandDTO>> getAllBrands() {
+        List<BrandDTO> brands = brandService.readAllBrands();
         if (brands.isEmpty()) {
             throw new ResourceNotFoundException("There are no brands in DB");
         }
